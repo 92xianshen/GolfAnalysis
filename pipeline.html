@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+</head>
+<body>
+<p>Data generating pipeline: data_augmentation.py -> data_shuffle.py -> train_test_split.py -> data_standardization.py -> 10folds_xval_split.py</p>
+<p>data_augmentation.py rescaling the dataset, performing time translating and amplitude rescaling for some signals. Input: data/dataset.npz, data/labels.npz. Output: data_ext/data_ext.npz, data_ext/labels_ext.npz </p>
+<p>data_shuffle.py shuffling the dataset randomly. Input: data_ext/data_ext.npz, data_ext/labels_ext.npz. Output: data_ext_shuffle/data_ext_shuffle.npz, data_ext_shuffle/labels_ext_shuffle.npz</p>
+<p>train_test_split.py spliting augmented dataset into training set and test set. Input: data_ext_shuffle/data_ext_shuffle.npz, data_ext_shuffle/labels_ext_shuffle.npz. Output: train_test/X_train.npz, train_test/y_train.npz, train_test/X_test.npz, train_test/y_test.npz</p>
+<p>data_standardization.py standardizing the training set and test set by removing the mean and rescaling to unit variance. Input: train_test/X_train.npz, train_test/y_train.npz, train_test/X_test.npz, train_test/y_test.npz. Output: train_test_stan/X_train.npz, train_test_stan/y_train.npz, train_test_stan/X_test.npz, train_test_stan/y_test.npz</p>
+<p>10folds_xval_split.py spliting training set into 10 validation sets for hyperparameter selection. Input: train_test_stan/X_train.npz, train_test_stan/y_train.npz. Output: 10folds_xval/X_val*.npz, 10folds_xval/y_val*.npz</p>
+<p>Hyperparameter selection pipeline: 10folds_xval/*.py selecting hyperparameters such as the number of epochs, proper models, proper sensors, proper lengths of sequences. </p>
+<p>Training & testing pipeline: training_testing/*.py training on the training set and testing on the testing set. Output:checkpoints/golf_model_SENSORNAME*_SEQ*_MODELNAME*_epoch_99.npz, y_pred_SENSORNAME*_SEQ*_MODELNAME*.npz saving predicted(probabilities) arrays, y_labels_SENSORNAME*_SEQ*_MODELNAME*.npz saving predicted labels</p>
+<p>Model evaluation pipeline: CLFReport/calc_clf_report.py generating classification reports and confusion matrices, PRcurve/plot_pr.py generating precision-recall curves, F1score/F1score.py calculating f1-scores</p>
+</body>
+</html>
